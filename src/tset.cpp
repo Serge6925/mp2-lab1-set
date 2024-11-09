@@ -50,7 +50,7 @@ void TSet::InsElem(const int Elem) // включение элемента мно
 
 void TSet::DelElem(const int Elem) // исключение элемента множества
 {
-    if ((Elem >= 0) && (Elem < MaxPower))
+    if ((Elem >= 0) && (Elem < MaxPower) && (this->IsMember(Elem)))
         BitField.ClrBit(Elem);
 }
 
@@ -102,14 +102,7 @@ TSet TSet::operator-(const int Elem) // разность с элементом
 
 TSet TSet::operator*(const TSet &s) // пересечение
 {
-    TBitField bf(MaxPower);
-
-    if (MaxPower > s.MaxPower)
-        bf = bf | ~TBitField(s.MaxPower);
-    else
-        bf = ~bf | TBitField(s.MaxPower);
-
-    TSet A(BitField & s.BitField & bf);
+    TSet A(BitField & s.BitField);
 
     return A;
 }
